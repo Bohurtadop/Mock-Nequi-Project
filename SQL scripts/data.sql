@@ -1,20 +1,20 @@
-INSERT INTO Users(user_id, full_name, email, password)
+INSERT INTO Users(name, lastname, email, password)
 VALUES
-( 1, 'Joel David Moore', 'email1@falsemail.com', SHA2('Pass6601', 224) ),
- ( 2, 'Orlando Bloom', 'email2@falsemail.com', SHA2('Pass6602', 224) ),
- ( 3, 'Rory Kinnear', 'email3@falsemail.com', SHA2('Pass6603', 224) ),
- ( 4, 'Christian Bale', 'email4@falsemail.com', SHA2('Pass6604', 224) ),
- ( 5, 'Rob Walker', 'email5@falsemail.com', SHA2('Pass6605', 224) ),
- ( 6, 'Samantha Morton', 'email6@falsemail.com', SHA2('Pass6606', 224) ),
- ( 7, 'James Franco', 'email7@falsemail.com', SHA2('Pass6607', 224) ),
- ( 8, 'Donna Murphy', 'email8@falsemail.com', SHA2('Pass6608', 224) ),
- ( 9, 'Robert Downey Jr.', 'email9@falsemail.com', SHA2('Pass6609', 224) ),
- ( 10, 'Daniel Radcliffe', 'email10@falsemail.com', SHA2('Pass6610', 224) ),
- ( 11, 'Lauren Cohan', 'email11@falsemail.com', SHA2('Pass6611', 224) ),
- ( 12, 'Marlon Brando', 'email12@falsemail.com', SHA2('Pass6612', 224) ),
- ( 13, 'Mathieu Amalric', 'email13@falsemail.com', SHA2('Pass6613', 224) ),
- ( 14, 'Orlando Bloom', 'email14@falsemail.com', SHA2('Pass6614', 224) ),
- ( 15, 'Ruth Wilson', 'email15@falsemail.com', SHA2('Pass6615', 224) );
+ ('Joel David', 'Moore', 'email1@falsemail.com', SHA2('Pass6601', 224) ),
+ ('Orlando', 'Bloom', 'email2@falsemail.com', SHA2('Pass6602', 224) ),
+ ('Rory', 'Kinnear', 'email3@falsemail.com', SHA2('Pass6603', 224) ),
+ ('Christian', 'Bale', 'email4@falsemail.com', SHA2('Pass6604', 224) ),
+ ('Rob', 'Walker', 'email5@falsemail.com', SHA2('Pass6605', 224) ),
+ ('Samantha', 'Morton', 'email6@falsemail.com', SHA2('Pass6606', 224) ),
+ ('James', 'Franco', 'email7@falsemail.com', SHA2('Pass6607', 224) ),
+ ('Donna', 'Murphy', 'email8@falsemail.com', SHA2('Pass6608', 224) ),
+ ('Robert', 'Downey Jr.', 'email9@falsemail.com', SHA2('Pass6609', 224) ),
+ ('Daniel', 'Radcliffe', 'email10@falsemail.com', SHA2('Pass6610', 224) ),
+ ('Lauren', 'Cohan', 'email11@falsemail.com', SHA2('Pass6611', 224) ),
+ ('Marlon', 'Brando', 'email12@falsemail.com', SHA2('Pass6612', 224) ),
+ ('Mathieu', 'Amalric', 'email13@falsemail.com', SHA2('Pass6613', 224) ),
+ ('Orlando', 'Bloom', 'email14@falsemail.com', SHA2('Pass6614', 224) ),
+ ('Ruth', 'Wilson', 'email15@falsemail.com', SHA2('Pass6615', 224) );
 
 INSERT INTO Accounts(account_id, available_balance, mattress_amount, created_at, user_id)
 VALUES
