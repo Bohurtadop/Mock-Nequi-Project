@@ -19,6 +19,7 @@ class Menu
       @name = ""
       @lastname = ""
       @fullname = ""
+      # @GM.addMoney(@fullname)
       @GM.homeScreen
       answer = self.getAnswer
       case answer
