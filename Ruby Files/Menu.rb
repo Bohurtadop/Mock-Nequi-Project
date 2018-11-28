@@ -1,13 +1,13 @@
 load 'Database.rb'
+load 'GraphicMenu.rb'
 
 class Menu
 
   def initialize
     @DB = Database.new
+    @GM = GraphicMenu.new
     # STATE means which menu is active. 0: Home screen, 1: Sign in, 2: Sign up, 3: Main menu
     @state = 0
-    @edge = "+-----------------------------------------------------------------------+\n"
-    @empty = "|\t\t\t\t\t\t\t\t\t|\n"
     self.controlMenu
   end
 
@@ -19,7 +19,7 @@ class Menu
       @name = ""
       @lastname = ""
       @fullname = ""
-      self.homeScreen
+      @GM.homeScreen
       answer = self.getAnswer
       case answer
       when 0
@@ -32,36 +32,39 @@ class Menu
         @state = 2
       end
     when 1
-      self.signIn
+      @GM.signIn(@email, @encryptpass)
       self.getEmail
       if @state == 1
         system('cls')
-        self.signIn
+        @GM.signIn(@email, @encryptpass)
         self.getPassword
-        @fullname = @DB.getFullname(@email)
-        @state = 3
+        if @state == 1
+          @state = 3
+        end
       end
     when 2
-      self.signUp
+      @GM.signUp(@name, @lastname, @email, @encryptpass)
       self.getName
       if @state == 2
         system('cls')
-        self.signUp
+        @GM.signUp(@name, @lastname, @email, @encryptpass)
         self.getLastname
         if @state == 2
           system('cls')
-          self.signUp
+          @GM.signUp(@name, @lastname, @email, @encryptpass)
           self.getEmail
           if @state == 2
             system('cls')
-            self.signUp
+            @GM.signUp(@name, @lastname, @email, @encryptpass)
             self.getPassword
-            @state = 3
+            if @state == 2
+              @state = 3
+            end
           end
         end
       end
     when 3
-      self.mainMenu
+      @GM.mainMenu(@DB.getFullname(@email))
       answer = self.getAnswer
       case answer
       when 0
@@ -71,175 +74,6 @@ class Menu
     end
     system('cls')
     self.controlMenu
-  end
-
-  def homeScreen
-    print @edge + @empty
-    print "|\t\t\t\tMOCK NEQUI\t\t\t\t|\n"
-    print @empty + @edge + @edge
-    print "|\t1. Sign in.\t\t\t\t\t\t\t|\n"
-    print @edge
-    print "|\t2. Sign up.\t\t\t\t\t\t\t|\n"
-    print @edge + @edge + @empty
-    print "|\t\t\t\t\t\tEnter 0 to exit.\t|\n"
-    print @edge
-  end
-
-  def signIn
-    print @edge + @empty
-    print "|\t\t\t\tMOCK NEQUI\t\t\t\t|\n"
-    print @empty + @edge + @edge
-    if @email.length < 1
-      print "|\tEmail: "+@email+"\t\t\t\t\t\t\t\t|\n"
-    elsif @email.length < 9
-      print "|\tEmail: "+@email+"\t\t\t\t\t\t\t|\n"
-    elsif @email.length < 17
-      print "|\tEmail: "+@email+"\t\t\t\t\t\t|\n"
-    elsif @email.length < 25
-      print "|\tEmail: "+@email+"\t\t\t\t\t|\n"
-    elsif @email.length < 33
-      print "|\tEmail: "+@email+"\t\t\t\t|\n"
-    elsif @email.length < 41
-      print "|\tEmail: "+@email+"\t\t\t|\n"
-    elsif @email.length < 49
-      print "|\tEmail: "+@email+"\t\t|\n"
-    elsif @email.length < 57
-      print "|\tEmail: "+@email+"\t|\n"
-    else
-      print "| Email: "+@email+"\t|\n"
-    end
-    print @edge
-    if @encryptpass.length < 6
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t\t\t\t|\n"
-    elsif @encryptpass.length < 14
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t\t\t|\n"
-    elsif @encryptpass.length < 22
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t\t|\n"
-    elsif @encryptpass.length < 30
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t|\n"
-    elsif @encryptpass.length < 38
-      print "|\tPassword: "+@encryptpass+"\t\t\t|\n"
-    elsif @encryptpass.length < 46
-      print "|\tPassword: "+@encryptpass+"\t\t|\n"
-    elsif @encryptpass.length < 54
-      print "|\tPassword: "+@encryptpass+"\t|\n"
-    else
-      print "| Password: "+@encryptpass+"\t|\n"
-    end
-    print @edge + @edge + @empty
-    print "|\t\t\t\t\t\tEnter 0 to exit.\t|\n"
-    print @edge
-  end
-
-  def signUp
-    print @edge + @empty
-    print "|\t\t\t\tMOCK NEQUI\t\t\t\t|\n"
-    print @empty + @edge + @edge
-    if @name.length < 2
-      print "|\tName: "+@name+"\t\t\t\t\t\t\t\t|\n"
-    elsif @name.length < 10
-      print "|\tName: "+@name+"\t\t\t\t\t\t\t|\n"
-    elsif @name.length < 18
-      print "|\tName: "+@name+"\t\t\t\t\t\t|\n"
-    elsif @name.length < 26
-      print "|\tName: "+@name+"\t\t\t\t\t|\n"
-    elsif @name.length < 34
-      print "|\tName: "+@name+"\t\t\t\t|\n"
-    elsif @name.length < 42
-      print "|\tName: "+@name+"\t\t\t|\n"
-    elsif @name.length < 50
-      print "|\tName: "+@name+"\t\t|\n"
-    elsif @name.length < 58
-      print "|\tName: "+@name+"\t|\n"
-    else
-      print "| Name: "+@name+"\t|\n"
-    end
-    print @edge
-    if @lastname.length < 6
-      print "|\tLastame: "+@lastname+"\t\t\t\t\t\t\t|\n"
-    elsif @lastname.length < 14
-      print "|\tLastame: "+@lastname+"\t\t\t\t\t\t|\n"
-    elsif @lastname.length < 22
-      print "|\tLastame: "+@lastname+"\t\t\t\t\t|\n"
-    elsif @lastname.length < 30
-      print "|\tLastame: "+@lastname+"\t\t\t\t|\n"
-    elsif @lastname.length < 38
-      print "|\tLastame: "+@lastname+"\t\t\t|\n"
-    elsif @lastname.length < 46
-      print "|\tLastame: "+@lastname+"\t\t|\n"
-    elsif @lastname.length < 54
-      print "|\tLastame: "+@lastname+"\t|\n"
-    else
-      print "| tLastame: "+@lastname+"\t|\n"
-    end
-    print @edge
-    if @email.length < 1
-      print "|\tEmail: "+@email+"\t\t\t\t\t\t\t\t|\n"
-    elsif @email.length < 9
-      print "|\tEmail: "+@email+"\t\t\t\t\t\t\t|\n"
-    elsif @email.length < 17
-      print "|\tEmail: "+@email+"\t\t\t\t\t\t|\n"
-    elsif @email.length < 25
-      print "|\tEmail: "+@email+"\t\t\t\t\t|\n"
-    elsif @email.length < 33
-      print "|\tEmail: "+@email+"\t\t\t\t|\n"
-    elsif @email.length < 41
-      print "|\tEmail: "+@email+"\t\t\t|\n"
-    elsif @email.length < 49
-      print "|\tEmail: "+@email+"\t\t|\n"
-    elsif @email.length < 57
-      print "|\tEmail: "+@email+"\t|\n"
-    else
-      print "| Email: "+@email+"\t|\n"
-    end
-    print @edge
-    if @encryptpass.length < 6
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t\t\t\t|\n"
-    elsif @encryptpass.length < 14
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t\t\t|\n"
-    elsif @encryptpass.length < 22
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t\t|\n"
-    elsif @encryptpass.length < 30
-      print "|\tPassword: "+@encryptpass+"\t\t\t\t|\n"
-    elsif @encryptpass.length < 38
-      print "|\tPassword: "+@encryptpass+"\t\t\t|\n"
-    elsif @encryptpass.length < 46
-      print "|\tPassword: "+@encryptpass+"\t\t|\n"
-    elsif @encryptpass.length < 54
-      print "|\tPassword: "+@encryptpass+"\t|\n"
-    else
-      print "| Password: "+@encryptpass+"\t|\n"
-    end
-    print @edge + @edge + @empty
-    print "|\t\t\t\t\t\tEnter 0 to exit.\t|\n"
-    print @edge
-  end
-
-  def mainMenu
-    @fullname = @fullname.rjust(47)
-    print @edge + @empty
-    print "|\tMOCK NEQUI #{@fullname}\t|\n"
-    print @empty + @edge + @edge
-    print "|\t1. Check the available balance in your account.\t\t\t|\n"
-    print @edge
-    print "|\t2. Check the total balance in your account.\t\t\t|\n"
-    print @edge
-    print "|\t3. Enter money to your account.\t\t\t\t\t|\n"
-    print @edge
-    print "|\t4. Withdraw money from your account.\t\t\t\t|\n"
-    print @edge
-    print "|\t5. Send money to other account.\t\t\t\t\t|\n"
-    print @edge
-    print "|\t6. Check your latest 10 transactions.\t\t\t\t|\n"
-    print @edge
-    print "|\t7. Mattress menu.\t\t\t\t\t\t|\n"
-    print @edge
-    print "|\t8. Pockets menu.\t\t\t\t\t\t|\n"
-    print @edge
-    print "|\t9. Goals menu.\t\t\t\t\t\t\t|\n"
-    print @edge + @edge + @empty
-    print "|\t\t\t\t\tEnter 0 to close session.\t|\n"
-    print @edge
   end
 
   def getAnswer

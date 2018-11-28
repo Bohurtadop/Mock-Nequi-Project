@@ -3,7 +3,7 @@ require 'mysql2'
 class Database
 
 	def initialize
-		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "nequi")
+		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "mock_nequi")
 		# results = client.query("SELECT * FROM Users WHERE user_id = 1")
 		# client.query("SELECT * FROM Users WHERE user_id = 1").each do |row|
   	# 	print row["name"]
@@ -18,11 +18,18 @@ class Database
 
 	def addUser (name, lastname, email, password)
 		@client.query("INSERT INTO Users(name, lastname, email, password) VALUES('#{name}', '#{lastname}', '#{email}', SHA2('#{password}', 224))")
+		self.addAccount(email)
+	end
+
+	def addAccount (email)
+		@client.query("SELECT user_id FROM Users WHERE email = '#{email}'").each do |row|
+  	 	user_id = row["user_id"]
+			@client.query("INSERT INTO Accounts(available_balance, mattress_amount, user_id) VALUES( 0, 0, #{user_id})")
+		end
 	end
 
 	def getFullname (email)
-			email = "'"+email+"'"
-		@client.query("SELECT * FROM Users WHERE email = #{email}").each do |row|
+		@client.query("SELECT * FROM Users WHERE email = '#{email}'").each do |row|
   	 	name = row["name"]
 			lastname = row["lastname"]
 			return name + " " + lastname
@@ -30,8 +37,7 @@ class Database
 	end
 
 	def validateEmail (email)
-		email = "'"+email+"'"
-		results = @client.query("SELECT * FROM Users WHERE email = #{email}")
+		results = @client.query("SELECT * FROM Users WHERE email = '#{email}'")
 		if results.count != 0
 			return true
 		else
@@ -40,12 +46,10 @@ class Database
 	end
 
 	def validatePassword (email, password)
-		email = "'"+email+"'"
-		password = "'"+password+"'"
-		@client.query("SELECT SHA2(#{password}, 224)").each do |row|
-  	 	password = row["SHA2(#{password}, 224)"]
+		@client.query("SELECT SHA2('#{password}', 224)").each do |row|
+  	 	password = row["SHA2('#{password}', 224)"]
 		end
-		@client.query("SELECT * FROM Users WHERE email = #{email}").each do |row|
+		@client.query("SELECT * FROM Users WHERE email = '#{email}'").each do |row|
   	 	if password == row["password"]
 				return true
 			else
