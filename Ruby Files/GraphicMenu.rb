@@ -5,7 +5,7 @@ class GraphicMenu
     @mocknequi = "MOCK NEQUI".center(71)
     @exitstring = "Enter 0 to exit".rjust(63)
     @signoutstring = "Enter 0 to sign out.".rjust(63)
-    @returnstring = "Enter 0 to return to main menu.".rjust(63)
+    @returnstring = "Press enter to return to main menu.".rjust(63)
   end
 
   def homeScreen
@@ -67,7 +67,7 @@ class GraphicMenu
     print @edge
     print "|\t4. Withdraw money from your account.\t\t\t\t|\n"
     print @edge
-    print "|\t5. Send money to other account.\t\t\t\t\t|\n"
+    print "|\t5. Send money to another account.\t\t\t\t|\n"
     print @edge
     print "|\t6. Check your latest 10 transactions.\t\t\t\t|\n"
     print @edge
@@ -83,7 +83,7 @@ class GraphicMenu
 
   def availableBalance (fullname, availableBalance)
     fullname = fullname.rjust(40)
-    availableBalance = availableBalance.rjust(63)
+    availableBalance = availableBalance.to_s.rjust(63)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
@@ -96,7 +96,7 @@ class GraphicMenu
 
   def totalBalance (fullname, totalBalance)
     fullname = fullname.rjust(40)
-    totalBalance = totalBalance.rjust(63)
+    totalBalance = totalBalance.to_s.rjust(63)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
@@ -114,6 +114,46 @@ class GraphicMenu
     print @empty + @edge + @edge
     print "|\tAdd money to your account:\t\t\t\t\t|\n"
     print @edge + @edge + @empty
+    print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
+  def withdrawMoney (fullname)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tWithdraw money from your account:\t\t\t\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
+  def sendMoney (fullname, email)
+    emailstring = email.ljust(49)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tSend money to another account:\t\t\t\t\t|\n"
+    print @edge
+    print "|\tEmail: #{emailstring}\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
+  def showTransactions (fullname, transactions)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    for i in (0..transactions.length-1)
+      print "|  #{i+1}. Date: #{transactions[i][0].to_s[0..18]}    Type: #{transactions[i][1].to_s}  Amount: #{transactions[i][2].to_s}\t|\n"
+      print "|  User: #{transactions[i][3].to_s.ljust(25)} From/To: #{transactions[i][4].to_s.ljust(27)}\t|\n"
+      print @edge
+    end
+    print @edge + @empty
     print "|#{@returnstring}\t|\n"
     print @edge
   end
