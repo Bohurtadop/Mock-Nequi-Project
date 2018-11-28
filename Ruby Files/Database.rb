@@ -3,7 +3,8 @@ require 'mysql2'
 class Database
 
 	def initialize
-		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "mock_nequi")
+		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "nequi")
+		# @client = Mysql2::Client.new(:host => "localhost", :username => "icortes", :password => "pass", :database => "mock_nequi")
 		# results = client.query("SELECT * FROM Users WHERE user_id = 1")
 		# client.query("SELECT * FROM Users WHERE user_id = 1").each do |row|
   	# 	print row["name"]
