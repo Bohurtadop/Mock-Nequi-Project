@@ -104,6 +104,15 @@ class Database
 		return transactions
 	end
 
+	def getPockets (accountId)
+		pockets = []
+		@client.query("SELECT * FROM Pockets WHERE account_id = #{accountId}").each do |row|
+			registry = [row["pocket_name"], row["amount"]]
+			pockets << registry
+		end
+		return pockets
+	end
+
 	def getMattressAmount (accountId)
 		@client.query("SELECT mattress_amount FROM Accounts WHERE account_id = #{accountId}").each do |row|
 			return row["mattress_amount"]
@@ -116,10 +125,26 @@ class Database
 		@client.query("UPDATE Accounts SET available_balance = #{balance - money}, mattress_amount = #{mattressAmount + money} WHERE account_id = #{accountId}")
 	end
 
+	def addMoneyToPocket (accountId, pocketName, amount, money)
+		balance = self.getAvailableBalance (accountId)
+		@client.query("UPDATE Pockets SET amount = #{amount + money} WHERE (account_id = #{accountId} AND pocket_name = '#{pocketName}')")
+		@client.query("UPDATE Accounts SET available_balance = #{balance - money} WHERE account_id = #{accountId}")
+	end
+
 	def withdrawMoneyFromMattress (accountId, money)
 		balance = self.getAvailableBalance (accountId)
 		mattressAmount = self.getMattressAmount (accountId)
 		@client.query("UPDATE Accounts SET available_balance = #{balance + money}, mattress_amount = #{mattressAmount - money} WHERE account_id = #{accountId}")
+	end
+
+	def addPocket (accountId, pocketName)
+		@client.query"INSERT INTO Pockets(pocket_name, amount, account_id) VALUES( '#{pocketName}', 0, #{accountId})"
+	end
+
+	def deletePocket (accountId, pocketName, amount)
+		balance = self.getAvailableBalance (accountId)
+		@client.query"DELETE FROM Pockets WHERE(account_id = #{accountId} AND pocket_name = '#{pocketName}')"
+		@client.query("UPDATE Accounts SET available_balance = #{balance + amount} WHERE account_id = #{accountId}")
 	end
 
 	def validateEmail (email)

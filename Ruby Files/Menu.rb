@@ -148,11 +148,43 @@ class Menu
       end
     when 5
       @GM.pocketsMenu(@fullname)
+      @pockets = @DB.getPockets(@accountId)
       answer = self.getAnswer
       system('cls')
       case answer
       when 0
         @state = 3
+      when 1
+        @GM.showPockets(@fullname, @pockets)
+        self.getAnswer
+      when 2
+        @GM.addPocket(@fullname)
+        pocketName = self.getPocketName
+        if pocketName != "0"
+          @DB.addPocket(@accountId, pocketName)
+        end
+      when 3
+        @GM.showPockets(@fullname, @pockets)
+        pocketNumber = self.getPocketNumber
+        if pocketNumber != 0
+          @DB.deletePocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1].to_i)
+        end
+      when 4
+        @GM.showPockets(@fullname, @pockets)
+        pocketNumber = self.getPocketNumber
+        if pocketNumber != 0
+          money = self.getMoney
+          if money != 0
+            money = self.validateWithdrawMoney(money)
+            if money != 0
+              @DB.addMoneyToPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1], money)
+            end
+          end
+        end
+      when 5
+
+      when 6
+
       end
     when 6
       @GM.goalsMenu(@fullname)
@@ -233,6 +265,44 @@ class Menu
     return money
   end
 
+  def getPocketName
+    print "\nPocket name: "
+    pocketName = gets.chomp
+    if pocketName == 0
+      return pocketName
+    else
+      pocketName = self.validatePocketName(pocketName)
+    end
+    return pocketName
+  end
+
+  def getPocketNumber
+    print "\nType the number of pocket: "
+    pocketNumber = gets.chomp.to_i
+    if pocketNumber == 0
+      return pocketNumber
+    else
+      pocketNumber = self.validatePocketNumber(pocketNumber)
+    end
+    return pocketNumber
+  end
+
+  def validatePocketName (pocketName)
+    while pocketName != "0" && pocketName.length < 1
+      print "\nIncorrect pocket name, try again."
+      pocketName = self.getPocketName
+    end
+    return pocketName
+  end
+
+  def validatePocketNumber (pocketNumber)
+    while pocketNumber < 0 || pocketNumber > @pockets.length
+      print "\nIncorrect number, try again."
+      pocketNumber = self.getPocketNumber
+    end
+    return pocketNumber
+  end
+
   def validateAnswer (answer)
     case @state
     when 0
@@ -269,6 +339,7 @@ class Menu
       if @email == "0"
         system('cls')
         @state = 0
+        break
       else
         print "\nIncorrect email. Your email: "
         @email = gets.chomp

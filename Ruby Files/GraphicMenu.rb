@@ -158,6 +158,20 @@ class GraphicMenu
     print @edge
   end
 
+  def showPockets (fullname, pockets)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    for i in (0..pockets.length-1)
+      print "|  #{i+1}. Pocket name: #{pockets[i][0].to_s.ljust(33)}  Amount: #{pockets[i][1].to_s.ljust(9)}\t|\n"
+      print @edge
+    end
+    print @edge + @empty
+    print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
   def mattressMenu (fullname)
     fullname = fullname.rjust(40)
     print @edge + @empty
@@ -208,6 +222,17 @@ class GraphicMenu
     print "|\t6. Send money to another user.\t\t\t\t\t|\n"
     print @edge + @edge + @empty
     print "|#{@exitstring}\t|\n"
+    print @edge
+  end
+
+  def addPocket (fullname)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tAdd pocket:\t\t\t\t\t\t\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@returnstring}\t|\n"
     print @edge
   end
 
