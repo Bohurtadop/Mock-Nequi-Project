@@ -69,28 +69,25 @@ class Menu
       @fullname = @DB.getFullname(@email)
       @GM.mainMenu(@fullname)
       answer = self.getAnswer
+      system('cls')
       case answer
       when 0
         @state = 0
       when 1
-        system('cls')
         availableBalance = @DB.getAvailableBalance(@accountId)
         @GM.availableBalance(@fullname, availableBalance)
         self.getAnswer
       when 2
-        system('cls')
         totalBalance = @DB.getTotalBalance(@accountId)
         @GM.totalBalance(@fullname, totalBalance)
         self.getAnswer
       when 3
-        system('cls')
         @GM.addMoney(@fullname)
         money = self.getMoney
         if money != 0
           @DB.addMoney(@accountId, money)
         end
       when 4
-        system('cls')
         @GM.withdrawMoney(@fullname)
         money = self.getMoney
         money = self.validateWithdrawMoney(money)
@@ -98,25 +95,72 @@ class Menu
           @DB.withdrawMoney(@accountId, money, @where)
         end
       when 5
-        system('cls')
         @GM.sendMoney(@fullname, "")
         email = self.getEmailToSend
         if email != "0"
           system('cls')
           @GM.sendMoney(@fullname, email)
-          money = self.getMoneyToSend
+          money = self.getMoney
           money = self.validateWithdrawMoney(money)
           if money != 0
             @DB.sendMoney(@accountId, email, money, @where)
           end
         end
       when 6
-        system('cls')
         @GM.showTransactions(@fullname, @DB.getTransactions(@accountId))
         self.getAnswer
       when 7
+        @state = 4
       when 8
+        @state = 5
       when 9
+        @state = 6
+      end
+    when 4
+      @GM.mattressMenu(@fullname)
+      answer = self.getAnswer
+      system('cls')
+      case answer
+      when 0
+        @state = 3
+      when 1
+        mattressAmount = @DB.getMattressAmount(@accountId)
+        @GM.mattressAmount(@fullname, mattressAmount)
+        self.getAnswer
+      when 2
+        @GM.addMoney(@fullname)
+        money = self.getMoney
+        money = self.validateWithdrawMoney(money)
+        if money != 0
+          @DB.addMoneyToMattress(@accountId, money)
+        end
+      when 3
+        @GM.withdrawMoney(@fullname)
+        money = self.getMoney
+        mattressAmount = @DB.getMattressAmount(@accountId)
+        while mattressAmount < money && money != 0
+          print "The amount is greater than mattress amount."
+          money = self.getMoney
+        end
+        if money != 0
+          @DB.withdrawMoneyFromMattress(@accountId, money)
+        end
+      end
+    when 5
+      @GM.pocketsMenu(@fullname)
+      answer = self.getAnswer
+      system('cls')
+      case answer
+      when 0
+        @state = 3
+      end
+    when 6
+      @GM.goalsMenu(@fullname)
+      answer = self.getAnswer
+      system('cls')
+      case answer
+      when 0
+        @state = 3
       end
     end
     system('cls')
@@ -183,14 +227,7 @@ class Menu
   end
 
   def getMoney
-    print "\nAmount of money to add: "
-    money = gets.chomp.to_i
-    money = self.validateMoney(money)
-    return money
-  end
-
-  def getMoneyToSend
-    print "\nAmount of money to send: "
+    print "\nAmount of money: "
     money = gets.chomp.to_i
     money = self.validateMoney(money)
     return money
@@ -203,14 +240,28 @@ class Menu
         print "\nIncorrect answer. Your answer: "
         answer = gets.chomp.to_i
       end
-      return answer
     when 3
       while answer < 0 || answer > 9
         print "\nIncorrect answer. Your answer: "
         answer = gets.chomp.to_i
       end
-      return answer
+    when 4
+      while answer < 0 || answer > 3
+        print "\nIncorrect answer. Your answer: "
+        answer = gets.chomp.to_i
+      end
+    when 5
+      while answer < 0 || answer > 6
+        print "\nIncorrect answer. Your answer: "
+        answer = gets.chomp.to_i
+      end
+    when 6
+      while answer < 0 || answer > 4
+        print "\nIncorrect answer. Your answer: "
+        answer = gets.chomp.to_i
+      end
     end
+      return answer
   end
 
   def validateEmail
@@ -273,20 +324,11 @@ class Menu
     end
   end
 
-  def validateMoneyToSend (money)
-    if money < 0
-      print "\nIncorrect amount, try again."
-      money = self.getMoneyToSend
-    else
-      return money
-    end
-  end
-
   def validateWithdrawMoney (money)
     amount = @DB.getAvailableBalance(@accountId)
     while money > amount
       print "\nThe amount is greater than the money available."
-      money = self.getMoneyToSend
+      money = self.getMoney
     end
     return money
   end

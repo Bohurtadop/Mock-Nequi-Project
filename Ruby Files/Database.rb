@@ -3,8 +3,7 @@ require 'mysql2'
 class Database
 
 	def initialize
-		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "nequi")
-		# @client = Mysql2::Client.new(:host => "localhost", :username => "icortes", :password => "pass", :database => "mock_nequi")
+		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "mock_nequi")
 		# results = client.query("SELECT * FROM Users WHERE user_id = 1")
 		# client.query("SELECT * FROM Users WHERE user_id = 1").each do |row|
   	# 	print row["name"]
@@ -103,6 +102,24 @@ class Database
 			transactions << registry
 		end
 		return transactions
+	end
+
+	def getMattressAmount (accountId)
+		@client.query("SELECT mattress_amount FROM Accounts WHERE account_id = #{accountId}").each do |row|
+			return row["mattress_amount"]
+		end
+	end
+
+	def addMoneyToMattress (accountId, money)
+		balance = self.getAvailableBalance (accountId)
+		mattressAmount = self.getMattressAmount (accountId)
+		@client.query("UPDATE Accounts SET available_balance = #{balance - money}, mattress_amount = #{mattressAmount + money} WHERE account_id = #{accountId}")
+	end
+
+	def withdrawMoneyFromMattress (accountId, money)
+		balance = self.getAvailableBalance (accountId)
+		mattressAmount = self.getMattressAmount (accountId)
+		@client.query("UPDATE Accounts SET available_balance = #{balance + money}, mattress_amount = #{mattressAmount - money} WHERE account_id = #{accountId}")
 	end
 
 	def validateEmail (email)

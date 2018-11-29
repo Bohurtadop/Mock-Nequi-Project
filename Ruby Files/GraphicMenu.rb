@@ -67,7 +67,7 @@ class GraphicMenu
     print @edge
     print "|\t4. Withdraw money from your account.\t\t\t\t|\n"
     print @edge
-    print "|\t5. Send money to another account.\t\t\t\t|\n"
+    print "|\t5. Send money to another user.\t\t\t\t\t|\n"
     print @edge
     print "|\t6. Check your latest 10 transactions.\t\t\t\t|\n"
     print @edge
@@ -112,7 +112,7 @@ class GraphicMenu
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
-    print "|\tAdd money to your account:\t\t\t\t\t|\n"
+    print "|\tAdd money:\t\t\t\t\t\t\t|\n"
     print @edge + @edge + @empty
     print "|#{@returnstring}\t|\n"
     print @edge
@@ -123,7 +123,7 @@ class GraphicMenu
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
-    print "|\tWithdraw money from your account:\t\t\t\t|\n"
+    print "|\tWithdraw money:\t\t\t\t\t\t\t|\n"
     print @edge + @edge + @empty
     print "|#{@returnstring}\t|\n"
     print @edge
@@ -155,6 +155,78 @@ class GraphicMenu
     end
     print @edge + @empty
     print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
+  def mattressMenu (fullname)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tMATTRESS MENU:\t\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t1. Check the money saved in your mattress.\t\t\t|\n"
+    print @edge
+    print "|\t2. Add available money to your mattress.\t\t\t|\n"
+    print @edge
+    print "|\t3. Withdraw money from your mattress.\t\t\t\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@exitstring}\t|\n"
+    print @edge
+  end
+
+  def mattressAmount (fullname, mattressAmount)
+    fullname = fullname.rjust(40)
+    mattressAmount = mattressAmount.to_s.rjust(63)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tMoney saved in your mattress:\t\t\t\t\t|\n"
+    print "|#{mattressAmount}\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
+  def pocketsMenu (fullname)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tPOCKETS MENU:\t\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t1. Check pockets information.\t\t\t\t\t|\n"
+    print @edge
+    print "|\t2. Create new pocket.\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t3. Delete pocket.\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t4. Add money to a pocket.\t\t\t\t\t|\n"
+    print @edge
+    print "|\t5. Withdraw money from a pocket.\t\t\t\t|\n"
+    print @edge
+    print "|\t6. Send money to another user.\t\t\t\t\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@exitstring}\t|\n"
+    print @edge
+  end
+
+  def goalsMenu (fullname)
+    fullname = fullname.rjust(40)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tGOALS MENU:\t\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t1. Check goals information.\t\t\t\t\t|\n"
+    print @edge
+    print "|\t2. Create new goal.\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t3. Delete goal.\t\t\t\t\t\t\t|\n"
+    print @edge
+    print "|\t4. Add money to a goal.\t\t\t\t\t\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@exitstring}\t|\n"
     print @edge
   end
 end
