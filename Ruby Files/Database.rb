@@ -4,6 +4,7 @@ class Database
 
 	def initialize
 		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "mock_nequi")
+		# @client = Mysql2::Client.new(:host => "localhost", :username => "icortes", :password => "pass", :database => "mock_nequi")
 		# results = client.query("SELECT * FROM Users WHERE user_id = 1")
 		# client.query("SELECT * FROM Users WHERE user_id = 1").each do |row|
   	# 	print row["name"]
@@ -49,7 +50,7 @@ class Database
 	def addAccount (email)
 		@client.query("SELECT user_id FROM Users WHERE email = '#{email}'").each do |row|
   	 	user_id = row["user_id"]
-			@client.query("INSERT INTO Accounts(available_balance, mattress_amount, user_id) VALUES( 0, 0, #{user_id})")
+			@client.query("INSERT INTO Accounts(user_id) VALUES(#{user_id})")
 		end
 	end
 
@@ -91,9 +92,9 @@ class Database
 		end
 	end
 
-	def getTransactions (accountId)
+	def getTransactions (accountId, number)
 		transactions = []
-		@client.query("SELECT * FROM Transactions WHERE account_id = #{accountId} ORDER BY transaction_date DESC LIMIT 10").each do |row|
+		@client.query("SELECT * FROM Transactions WHERE account_id = #{accountId} ORDER BY transaction_date DESC LIMIT #{number}").each do |row|
 			email = ""
 			@client.query("SELECT email FROM Users WHERE user_id = #{row["user_id"]}").each do |row2|
 				email = row2["email"]

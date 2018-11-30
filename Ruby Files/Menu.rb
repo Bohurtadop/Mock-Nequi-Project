@@ -19,6 +19,8 @@ class Menu
       @name = ""
       @lastname = ""
       @fullname = ""
+      @transactions = ""
+      @number = "_"
       @GM.homeScreen
       answer = self.getAnswer
       case answer
@@ -107,8 +109,13 @@ class Menu
           end
         end
       when 6
-        @GM.showTransactions(@fullname, @DB.getTransactions(@accountId))
-        self.getAnswer
+        @GM.showTransactions(@fullname, @transactions, @number)
+           @number = self.getNumberTransactions
+  			if @number != "_"
+  				@transactions = @DB.getTransactions(@accountId, @number)
+  				@GM.showTransactions(@fullname, @transactions, @number)
+  				self.getAnswer
+  			end
       when 7
         @state = 4
       when 8
@@ -265,6 +272,13 @@ class Menu
     return money
   end
 
+  def getNumberTransactions
+    print "\nHow many transactions do you want to see?: "
+    number = gets.chomp.to_i
+    number = self.validateTransactionsNumber(number)
+    return number
+  end
+
   def getPocketName
     print "\nPocket name: "
     pocketName = gets.chomp
@@ -402,5 +416,18 @@ class Menu
       money = self.getMoney
     end
     return money
+  end
+
+  def validateTransactionsNumber (number)
+    if number == 0
+      system('cls')
+      @state = 3
+      return("_")
+    end
+    while number < 0
+      print "\n It is not a valid argument."
+      number = self.getNumberTransactions
+    end
+    return(number)
   end
 end
