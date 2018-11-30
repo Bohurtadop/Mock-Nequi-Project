@@ -109,11 +109,11 @@ class Menu
           end
         end
       when 6
-        @GM.showTransactions(@fullname, @transactions, @number)
-           @number = self.getNumberTransactions
-  			if @number != "_"
-  				@transactions = @DB.getTransactions(@accountId, @number)
-  				@GM.showTransactions(@fullname, @transactions, @number)
+        @GM.mainMenu(@fullname)
+        number = self.getNumberTransactions
+  			if @number != 0
+          system('cls')
+  				@GM.showTransactions(@fullname, @DB.getTransactions(@accountId, number))
   				self.getAnswer
   			end
       when 7
@@ -422,12 +422,12 @@ class Menu
     if number == 0
       system('cls')
       @state = 3
-      return("_")
+      return number
     end
     while number < 0
-      print "\n It is not a valid argument."
+      print "\nIt is not a valid argument."
       number = self.getNumberTransactions
     end
-    return(number)
+    return number
   end
 end

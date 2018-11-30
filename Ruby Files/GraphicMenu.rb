@@ -69,7 +69,7 @@ class GraphicMenu
     print @edge
     print "|\t5. Send money to another user.\t\t\t\t\t|\n"
     print @edge
-    print "|\t6. Check your latest 10 transactions.\t\t\t\t|\n"
+    print "|\t6. Check your latest N transactions.\t\t\t\t|\n"
     print @edge
     print "|\t7. Mattress menu.\t\t\t\t\t\t|\n"
     print @edge
@@ -143,23 +143,21 @@ class GraphicMenu
     print @edge
   end
 
-  def showTransactions (fullname, transactions, number)
-    num_menssage = ("Showing the " + number.to_s + " lastes transactions:").ljust(64)
+  def showTransactions (fullname, transactions)
     fullname = fullname.rjust(40)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
-	 print "|\t#{num_menssage}|\n"
-	 print @empty + @edge
-	 if transactions != ""
-		 for i in (0..transactions.length-1)
-			 print "|  #{i+1}. Date: #{transactions[i][0].to_s[0..18]}    Type: #{transactions[i][1].to_s}  Amount: #{transactions[i][2].to_s}\t|\n"
-			 print "|  User: #{transactions[i][3].to_s.ljust(25)} From/To: #{transactions[i][4].to_s.ljust(27)}\t|\n"
-			 print @edge
-		 end
-	 else
-		 print @empty
-	 end
+    if transactions.length == 0
+      print "|  Your account don't have transactions yet.\t\t\t\t|\n"
+      print @edge
+    else
+      for i in (0..transactions.length-1)
+        print "|  #{i+1}. Date: #{transactions[i][0].to_s[0..18]}    Type: #{transactions[i][1].to_s}  Amount: #{transactions[i][2].to_s}\t|\n"
+        print "|  User: #{transactions[i][3].to_s.ljust(25)} From/To: #{transactions[i][4].to_s.ljust(27)}\t|\n"
+        print @edge
+      end
+    end
     print @edge + @empty
     print "|#{@returnstring}\t|\n"
     print @edge
