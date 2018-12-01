@@ -1,13 +1,3 @@
-load 'Database.rb'
-load 'Graphics.rb'
-load 'GoalsGraphics.rb'
-load 'MattressGraphics.rb'
-load 'MenuGraphics.rb'
-load 'PocketsGraphics.rb'
-load 'TransactionsGraphics.rb'
-load 'MattressDatabase.rb'
-load 'PocketsDatabase.rb'
-load 'TransactionsDatabase.rb'
 load 'LoginMenu.rb'
 load 'AccountMenu.rb'
 load 'PocketsMenu.rb'
@@ -16,20 +6,10 @@ load 'GoalsMenu.rb'
 class Menu
 
   def initialize
-    @DB = Database.new
-    @GM = Graphics.new
     @loginMenu = LoginMenu.new
     @accountMenu = AccountMenu.new
     @pocketsMenu = PocketsMenu.new
     @goalsMenu = GoalsMenu.new
-    @goalsGraphics = GoalsGraphics.new
-    @mattressGraphics = MattressGraphics.new
-    @menuGraphics = MenuGraphics.new
-    @pocketsGraphics = PocketsGraphics.new
-    @transactionsGraphics = TransactionsGraphics.new
-    @mattressDatabase = MattressDatabase.new
-    @pocketsDatabase = PocketsDatabase.new
-    @transactionsDatabase = TransactionsDatabase.new
     # STATE means which menu is active. 0: Home screen, 1: Sign in, 2: Sign up, 3: Main menu
     @state = 0
     self.controlMenu

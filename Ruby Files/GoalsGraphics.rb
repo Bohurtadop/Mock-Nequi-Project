@@ -29,14 +29,32 @@ class GoalsGraphics < Graphics
       print @edge
     else
       for i in (0..goals.length-1)
-        print "|  #{i+1}. Goal name: #{goals[i][0].to_s.ljust(33)}  Total amount: #{goals[i][1].to_s.ljust(9)}\t|\n"
-        print "|      Money saved: #{goals[i][2].to_s.ljust(28)}  Remaining money: #{(goals[i][1] - goals[i][2]).to_s.ljust(9)}\t|\n"
-        print "|      Status: #{goals[i][3].to_s.ljust(33)}  Deadline: #{goals[i][4].to_s[0..18]}\t|\n"
+        print "|  #{i+1}. Goal name: #{goals[i][0].to_s.ljust(47)}\t|\n"
+        print "|  MONEY: Target: #{goals[i][1].to_s.ljust(10)}  Saved: #{goals[i][2].to_s.ljust(10)}  Remaining: #{(goals[i][1] - goals[i][2]).to_s.ljust(10)}\t|\n"
+        print "|  Status: #{goals[i][3].to_s.ljust(13)}      Deadline: #{goals[i][4].to_s[0..18]}\t\t|\n"
         print @edge
       end
     end
     print @edge + @empty
     print "|#{@returnstring}\t|\n"
+    print @edge
+  end
+
+  def addGoal (fullname, name, targetAmount, deadline)
+    fullname = fullname.rjust(40)
+    name = name.ljust(46)
+    targetAmount = targetAmount.ljust(42)
+    deadline = deadline.ljust(47)
+    print @edge + @empty
+    print "|\tMOCK NEQUI\t#{fullname}\t|\n"
+    print @empty + @edge + @edge
+    print "|\tGoal name: #{name}\t|\n"
+    print @edge
+    print "|\tTarget amount: #{targetAmount}\t|\n"
+    print @edge
+    print "|\tDeadline: #{deadline}\t|\n"
+    print @edge + @edge + @empty
+    print "|#{@exitstring}\t|\n"
     print @edge
   end
 end

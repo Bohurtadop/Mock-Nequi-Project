@@ -4,6 +4,7 @@ class Database
 
 	def initialize
 		@client = Mysql2::Client.new(:host => "localhost", :username => "root", :password => "unal9712", :database => "mock_nequi")
+		# @client = Mysql2::Client.new(:host => "localhost", :username => "icortes", :password => "pass", :database => "mock_nequi")
 	end
 
 	def getFullname (email)

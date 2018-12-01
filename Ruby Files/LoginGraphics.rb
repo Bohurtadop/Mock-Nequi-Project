@@ -1,5 +1,7 @@
+load 'Graphics.rb'
+
 class LoginGraphics < Graphics
-  
+
   def homeScreen
     print @edge + @empty
     print "|#{@mocknequi}|\n"
@@ -36,7 +38,7 @@ class LoginGraphics < Graphics
     print @empty + @edge + @edge
     print "|\tName: #{namestring}\t|\n"
     print @edge
-    print "|\tLastame: #{lastnamestring}\t|\n"
+    print "|\tLastname: #{lastnamestring}\t|\n"
     print @edge
     print "|\tEmail: #{emailstring}\t|\n"
     print @edge

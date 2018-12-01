@@ -34,7 +34,7 @@ VALUES
  ( 14, 65600, 11000, '2016-02-28 07:58:58', 14),
  ( 15, 44000, 0, '2016-07-25 06:57:27', 15);
 
- INSERT INTO Goals(name, target_amount, money_saved, status, deadline, account_id)
+INSERT INTO Goals(name, target_amount, money_saved, status, deadline, account_id)
 -- VALUES( 'trip to mars', 300000000, 1000000, 2999900000, 'IN PROGRESS', '2050-10-18 00:00:00', 14);
 VALUES(
    'Goal1', 300000, 10000, 'IN PROGRESS', '2018-12-08 00:00:00', 14),

@@ -87,6 +87,17 @@ class InputMenu
     return pocketName
   end
 
+  def getGoalName
+    print "\nGoal name: "
+    goalName = gets.chomp
+    if goalName == 0
+      return goalName
+    else
+      goalName = self.validateGoalName(goalName)
+    end
+    return goalName
+  end
+
   def getPocketNumber (pockets)
     print "\nType the number of pocket: "
     pocketNumber = gets.chomp.to_i
@@ -98,6 +109,79 @@ class InputMenu
     return pocketNumber
   end
 
+  def getGoalNumber (goals)
+    print "\nType the number of goal: "
+    goalNumber = gets.chomp.to_i
+    if goalNumber == 0
+      return goalNumber
+    else
+      goalNumber = self.validateGoalNumber(goalNumber, goals)
+    end
+    return goalNumber
+  end
+
+  def getDeadline
+    print "\nType the deadline of your goal (AAAA-MM-DD): "
+    deadline = gets.chomp
+    if deadline == "0"
+      return 0
+    else
+      deadline = self.validateDeadline(deadline)
+    end
+    return deadline
+  end
+
+  def validateDeadline (deadline)
+    time = Time.new.to_s
+    year = time[0..3].to_i
+    mont = time[5..6].to_i
+    day = time[8..9].to_i
+    yearDeadline = deadline[0..3].to_i
+    montDeadline = deadline[5..6].to_i
+    dayDeadline = deadline[8..9].to_i
+    while deadline != "0" && deadline.length != 10
+      if (yearDeadline < year || (yearDeadline == year && montDeadline < mont) || (yearDeadline == year && montDeadline == mont && dayDeadline < day) || montDeadline > 12 || (self.getMontDays(mont) < days))
+        yearDeadline = deadline[0..3].to_i
+        montDeadline = deadline[5..6].to_i
+        dayDeadline = deadline[8..9].to_i
+        print "\nIncorrect deadline, try again."
+        deadline = self.getDeadline
+      end
+    end
+    deadline += " 00:00:00"
+    return deadline
+  end
+
+  def getMontDays(mont)
+    case mont
+    when 1
+      return 31
+    when 2
+      return 28
+    when 3
+      return 31
+    when 4
+      return 30
+    when 5
+      return 31
+    when 6
+      return 30
+    when 7
+      return 31
+    when 8
+      return 31
+    when 9
+      return 30
+    when 10
+      return 31
+    when 11
+      return 30
+    when 12
+      return 31
+    end
+    return 0
+  end
+
   def validatePocketName (pocketName)
     while pocketName != "0" && pocketName.length < 1
       print "\nIncorrect pocket name, try again."
@@ -106,12 +190,28 @@ class InputMenu
     return pocketName
   end
 
+  def validateGoalName (goalName)
+    while goalName != "0" && goalName.length < 1
+      print "\nIncorrect goal name, try again."
+      goalName = self.getGoalName
+    end
+    return goalName
+  end
+
   def validatePocketNumber (pocketNumber, pockets)
     while pocketNumber < 0 || pocketNumber > pockets.length
       print "\nIncorrect number, try again."
       pocketNumber = self.getPocketNumber(pockets)
     end
     return pocketNumber
+  end
+
+  def validateGoalNumber (goalNumber, goals)
+    while goalNumber < 0 || goalNumber > goals.length
+      print "\nIncorrect number, try again."
+      goalNumber = self.getPocketNumber(goals)
+    end
+    return goalNumber
   end
 
   def validateAnswer (answer, min, max)

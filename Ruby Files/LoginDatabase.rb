@@ -1,5 +1,7 @@
+load 'Database.rb'
+
 class LoginDatabase < Database
-  
+
   def addUser (name, lastname, email, password)
 		@client.query("INSERT INTO Users(name, lastname, email, password) VALUES('#{name}', '#{lastname}', '#{email}', SHA2('#{password}', 224))")
 		self.addAccount(email)
