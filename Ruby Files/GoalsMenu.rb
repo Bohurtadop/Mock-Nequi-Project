@@ -11,6 +11,7 @@ class GoalsMenu
   end
 
   def goalsMenu(data)
+    @DB.updateStatusGoals
     @accountId = @DB.getAccountId(data)
     @fullname = @DB.getFullname(data)
     @goalsGraphics.goalsMenu(@fullname)

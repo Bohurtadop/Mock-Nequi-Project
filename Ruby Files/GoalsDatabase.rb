@@ -1,4 +1,8 @@
 class GoalsDatabase < Database
+  def updateStatusGoals
+    @client.query("UPDATE Goals SET status = 'BEATEN' WHERE deadline < CURRENT_TIMESTAMP AND money_saved < target_amount")
+    @client.query("UPDATE Goals SET status = 'ACHIEVED' WHERE deadline >= CURRENT_TIMESTAMP AND money_saved = target_amount")
+  end
 
   def getGoals (accountId)
     goals = []
