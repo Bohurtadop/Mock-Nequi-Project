@@ -46,7 +46,7 @@ class TransactionsGraphics < Graphics
       print @edge
     else
       for i in (0..transactions.length-1)
-        print "|  #{i+1}. Date: #{transactions[i][0].to_s[0..18]}    Type: #{transactions[i][1].to_s}  Amount: #{transactions[i][2].to_s.ljust(9)}\t|\n"
+        print "|  #{i+1}. Date: #{transactions[i][0].to_s[0..18]}    Type: #{transactions[i][1].to_s}  Amount: #{@input.addDots(transactions[i][2].to_s).ljust(9)}\t|\n"
         print "|  User: #{transactions[i][3].to_s.ljust(25)} From/To: #{transactions[i][4].to_s.ljust(27)}\t|\n"
         print @edge
       end

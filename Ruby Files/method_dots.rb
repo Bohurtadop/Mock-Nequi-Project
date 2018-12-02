@@ -12,10 +12,22 @@ def addDots(string_value)
   end
   return(string_value)
 end
+
+# def addDots(stringValue)
+#   stringValue = stringValue.reverse
+#   string = ""
+#   i = stringValue.length - 1
+#   while i > 0
+#     string += stringValue[i..i-2]
+#     string += "."
+#     i -= 3
+#   end
+#   return string
+# end
 #
-# value = "1234567890213124155"
-# puts "#{value} \n"
-# puts "#{addDots(value)} \n \n"
+value = "1234567890213124155"
+puts "#{value} \n"
+puts "#{addDots(value)} \n \n"
 #
 # value = "1"
 # puts "#{value} \n"

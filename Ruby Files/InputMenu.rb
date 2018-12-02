@@ -139,16 +139,20 @@ class InputMenu
     yearDeadline = deadline[0..3].to_i
     montDeadline = deadline[5..6].to_i
     dayDeadline = deadline[8..9].to_i
-    while deadline != "0" && deadline.length != 10
-      if (yearDeadline < year || (yearDeadline == year && montDeadline < mont) || (yearDeadline == year && montDeadline == mont && dayDeadline < day) || montDeadline > 12 || (self.getMontDays(mont) < days))
-        yearDeadline = deadline[0..3].to_i
-        montDeadline = deadline[5..6].to_i
-        dayDeadline = deadline[8..9].to_i
-        print "\nIncorrect deadline, try again."
-        deadline = self.getDeadline
-      end
+    if deadline == "0"
+      return 0
     end
-    deadline += " 00:00:00"
+    while ((yearDeadline < year) || (yearDeadline == year && montDeadline < mont) || (yearDeadline == year && montDeadline == mont && dayDeadline < day) || montDeadline > 12 || (self.getMontDays(mont) < day))
+      print "\nIncorrect deadline, try again."
+      deadline = self.getDeadline
+      if deadline == "0"
+        return 0
+      end
+      yearDeadline = deadline[0..3].to_i
+      montDeadline = deadline[5..6].to_i
+      dayDeadline = deadline[8..9].to_i
+    end
+    deadline = yearDeadline.to_s + "-" + montDeadline.to_s + "-" + dayDeadline.to_s + " 00:00:00"
     return deadline
   end
 
@@ -180,6 +184,21 @@ class InputMenu
       return 31
     end
     return 0
+  end
+
+  def addDots(string_value)
+    a = string_value.length.divmod(3)
+
+    if a[1] != 0
+      positions = Array(0..a[0]-1).reverse!
+    else
+      positions = Array(1..a[0]-1).reverse!
+    end
+
+    for place in positions do
+      string_value = string_value.insert(3*place + a[1] , ".")
+    end
+    return(string_value)
   end
 
   def validatePocketName (pocketName)

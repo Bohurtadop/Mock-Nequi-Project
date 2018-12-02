@@ -1,5 +1,5 @@
 class MenuGraphics < Graphics
-  
+
   def mainMenu (fullname)
     fullname = fullname.rjust(40)
     print @edge + @empty
@@ -29,7 +29,7 @@ class MenuGraphics < Graphics
 
   def availableBalance (fullname, availableBalance)
     fullname = fullname.rjust(40)
-    availableBalance = availableBalance.to_s.rjust(63)
+    availableBalance = availableBalance.rjust(63)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
@@ -42,7 +42,7 @@ class MenuGraphics < Graphics
 
   def totalBalance (fullname, totalBalance)
     fullname = fullname.rjust(40)
-    totalBalance = totalBalance.to_s.rjust(63)
+    totalBalance = totalBalance.rjust(63)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge

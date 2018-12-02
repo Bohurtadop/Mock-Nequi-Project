@@ -28,10 +28,12 @@ class AccountMenu
       return 0
     when 1
       availableBalance = @DB.getAvailableBalance(@accountId)
+      availableBalance = @input.addDots(availableBalance.to_s)
       @menuGraphics.availableBalance(@fullname, availableBalance)
       gets.chomp
     when 2
       totalBalance = @DB.getTotalBalance(@accountId)
+      totalBalance = @input.addDots(totalBalance.to_s)
       @menuGraphics.totalBalance(@fullname, totalBalance)
       gets.chomp
     when 3
@@ -86,6 +88,7 @@ class AccountMenu
       return 3
     when 1
       mattressAmount = @mattressDatabase.getMattressAmount(@accountId)
+      mattressAmount = @input.addDots(mattressAmount.to_s)
       @mattressGraphics.mattressAmount(@fullname, mattressAmount)
       gets.chomp
     when 2

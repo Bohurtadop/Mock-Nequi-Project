@@ -19,9 +19,12 @@ class GoalsDatabase < Database
 		@client.query("UPDATE Accounts SET available_balance = #{balance + amount} WHERE account_id = #{accountId}")
 	end
 
-  def addMoneyToGoal (accountId, goalName, amount, money)
+  def addMoneyToGoal (accountId, goalName, targetAmount, amount, money)
 		balance = self.getAvailableBalance (accountId)
 		@client.query("UPDATE Goals SET money_saved = #{amount + money} WHERE (account_id = #{accountId} AND name = '#{goalName}')")
+    if targetAmount <= amount + money
+      	@client.query("UPDATE Goals SET status = 'ACHIEVED' WHERE (account_id = #{accountId} AND name = '#{goalName}')")
+    end
 		@client.query("UPDATE Accounts SET available_balance = #{balance - money} WHERE account_id = #{accountId}")
 	end
 end

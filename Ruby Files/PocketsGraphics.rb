@@ -10,7 +10,7 @@ class PocketsGraphics < Graphics
       print @edge
     else
       for i in (0..pockets.length-1)
-        print "|  #{i+1}. Pocket name: #{pockets[i][0].to_s.ljust(33)}  Amount: #{pockets[i][1].to_s.ljust(9)}\t|\n"
+        print "|  #{i+1}. Pocket name: #{pockets[i][0].to_s.ljust(33)}  Amount: #{@input.addDots(pockets[i][1].to_s).ljust(9)}\t|\n"
         print @edge
       end
     end

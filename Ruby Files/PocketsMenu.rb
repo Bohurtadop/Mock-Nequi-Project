@@ -45,7 +45,7 @@ class PocketsMenu
         if money != 0
           money = @input.validateWithdrawMoney(@accountId, money)
           if money != 0
-            @pocketsDatabase.addMoneyToPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1], money)
+            @pocketsDatabase.addMoneyToPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1].to_i, money)
           end
         end
       end
@@ -55,12 +55,13 @@ class PocketsMenu
       if pocketNumber != 0
         money = @input.getMoney
         if money != 0
-          while @pockets[pocketNumber-1][1] < money
-            print "The amount is greater than pocket amount."
+          while @pockets[pocketNumber-1][1].to_i < money
+            print @pockets[pocketNumber-1][1].to_i
+            print "\nThe amount is greater than pocket amount."
             money = @input.getMoney
           end
           if money != 0
-            @pocketsDatabase.withdrawMoneyFromPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1], money)
+            @pocketsDatabase.withdrawMoneyFromPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1].to_i, money)
           end
         end
       end

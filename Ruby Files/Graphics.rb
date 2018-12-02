@@ -1,6 +1,9 @@
+load 'InputMenu.rb'
+
 class Graphics
 
   def initialize
+    @input = InputMenu.new
     @edge = "+-----------------------------------------------------------------------+\n"
     @empty = "|\t\t\t\t\t\t\t\t\t|\n"
     @mocknequi = "MOCK NEQUI".center(71)

@@ -19,7 +19,7 @@ class GoalsGraphics < Graphics
     print @edge
   end
 
-  def showGoals (fullname, goals)
+  def showGoals (fullname, goals, remaining)
     fullname = fullname.rjust(40)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
@@ -30,7 +30,7 @@ class GoalsGraphics < Graphics
     else
       for i in (0..goals.length-1)
         print "|  #{i+1}. Goal name: #{goals[i][0].to_s.ljust(47)}\t|\n"
-        print "|  MONEY: Target: #{goals[i][1].to_s.ljust(10)}  Saved: #{goals[i][2].to_s.ljust(10)}  Remaining: #{(goals[i][1] - goals[i][2]).to_s.ljust(10)}\t|\n"
+        print "|  MONEY: Target: #{@input.addDots(goals[i][1].to_s).ljust(10)}  Saved: #{@input.addDots(goals[i][2].to_s).ljust(10)}  Remaining: #{remaining[i].to_s.ljust(10)}\t|\n"
         print "|  Status: #{goals[i][3].to_s.ljust(13)}      Deadline: #{goals[i][4].to_s[0..18]}\t\t|\n"
         print @edge
       end
@@ -43,7 +43,7 @@ class GoalsGraphics < Graphics
   def addGoal (fullname, name, targetAmount, deadline)
     fullname = fullname.rjust(40)
     name = name.ljust(46)
-    targetAmount = targetAmount.ljust(42)
+    targetAmount = @input.addDots(targetAmount.to_s).ljust(42)
     deadline = deadline.ljust(47)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"

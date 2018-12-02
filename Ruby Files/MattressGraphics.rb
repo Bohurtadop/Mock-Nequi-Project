@@ -1,5 +1,5 @@
 class MattressGraphics < Graphics
-  
+
   def mattressMenu (fullname)
     fullname = fullname.rjust(40)
     print @edge + @empty
@@ -19,7 +19,7 @@ class MattressGraphics < Graphics
 
   def mattressAmount (fullname, mattressAmount)
     fullname = fullname.rjust(40)
-    mattressAmount = mattressAmount.to_s.rjust(63)
+    mattressAmount = mattressAmount.rjust(63)
     print @edge + @empty
     print "|\tMOCK NEQUI\t#{fullname}\t|\n"
     print @empty + @edge + @edge
