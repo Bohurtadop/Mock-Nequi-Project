@@ -3,7 +3,6 @@ load 'GoalsDatabase.rb'
 load 'InputMenu.rb'
 
 class GoalsMenu
-
   def initialize
     @goalsGraphics = GoalsGraphics.new
     @DB = GoalsDatabase.new
@@ -17,12 +16,12 @@ class GoalsMenu
     @goalsGraphics.goalsMenu(@fullname)
     @goals = @DB.getGoals(@accountId)
     @remaining = []
-    for i in (0..@goals.length-1)
-      if (@goals[i][1] - @goals[i][2]) >= 0
-        @remaining << @input.addDots((@goals[i][1] - @goals[i][2]).to_s)
-      else
-        @remaining << 0
-      end
+    (0..@goals.length - 1).each do |i|
+      @remaining << if (@goals[i][1] - @goals[i][2]) >= 0
+                      @input.addDots((@goals[i][1] - @goals[i][2]).to_s)
+                    else
+                      0
+                    end
     end
     answer = @input.getAnswer(1, 4)
     system('cls')
@@ -33,27 +32,29 @@ class GoalsMenu
       @goalsGraphics.showGoals(@fullname, @goals, @remaining)
       gets.chomp
     when 2
-      @goalsGraphics.addGoal(@fullname, "", "", "")
+      @goalsGraphics.addGoal(@fullname, '', '', '')
       goalName = @input.getGoalName
-      if goalName != "0"
+      if goalName != '0' && !search_goal(goalName)
         system('cls')
-        @goalsGraphics.addGoal(@fullname, goalName, "", "")
+        @goalsGraphics.addGoal(@fullname, goalName, '', '')
         targetAmount = @input.getMoney
         if targetAmount != 0
           system('cls')
-          @goalsGraphics.addGoal(@fullname, goalName, targetAmount.to_s, "")
+          @goalsGraphics.addGoal(@fullname, goalName, targetAmount.to_s, '')
           deadline = @input.getDeadline
           if deadline != 0
             system('cls')
             @DB.addGoal(@accountId, goalName, targetAmount.to_s, deadline)
           end
         end
+      else
+        puts 'The goal could not be created'
       end
     when 3
       @goalsGraphics.showGoals(@fullname, @goals, @remaining)
       goalNumber = @input.getGoalNumber(@goals)
       if goalNumber != 0
-        @DB.deleteGoal(@accountId, @goals[goalNumber-1][0], @goals[goalNumber-1][2].to_i)
+        @DB.deleteGoal(@accountId, @goals[goalNumber - 1][0], @goals[goalNumber - 1][2].to_i)
       end
     when 4
       @goalsGraphics.showGoals(@fullname, @goals, @remaining)
@@ -63,11 +64,18 @@ class GoalsMenu
         if money != 0
           money = @input.validateWithdrawMoney(@accountId, money)
           if money != 0
-            @DB.addMoneyToGoal(@accountId, @goals[goalNumber-1][0], @goals[goalNumber-1][1].to_i, @goals[goalNumber-1][2].to_i, money)
+            @DB.addMoneyToGoal(@accountId, @goals[goalNumber - 1][0], @goals[goalNumber - 1][1].to_i, @goals[goalNumber - 1][2].to_i, money)
           end
         end
       end
     end
-    return 6
+    6
+  end
+
+  def search_goal(goal_name)
+    @goals.each do |goal|
+      return true if goal[0] == goal_name
+    end
+    false
   end
 end
