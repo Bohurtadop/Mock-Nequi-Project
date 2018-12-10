@@ -4,7 +4,6 @@ load 'TransactionsGraphics.rb'
 load 'InputMenu.rb'
 
 class PocketsMenu
-
   def initialize
     @transactionsGraphics = TransactionsGraphics.new
     @pocketsDatabase = PocketsDatabase.new
@@ -28,14 +27,16 @@ class PocketsMenu
     when 2
       @pocketsGraphics.addPocket(@fullname)
       pocketName = @input.getPocketName
-      if pocketName != "0"
+      if pocketName != '0' && !search_pocket(pocketName)
         @pocketsDatabase.addPocket(@accountId, pocketName)
+      else
+        puts 'The pocket could not be created'
       end
     when 3
       @pocketsGraphics.showPockets(@fullname, @pockets)
       pocketNumber = @input.getPocketNumber(@pockets)
       if pocketNumber != 0
-        @pocketsDatabase.deletePocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1].to_i)
+        @pocketsDatabase.deletePocket(@accountId, @pockets[pocketNumber - 1][0], @pockets[pocketNumber - 1][1].to_i)
       end
     when 4
       @pocketsGraphics.showPockets(@fullname, @pockets)
@@ -45,7 +46,7 @@ class PocketsMenu
         if money != 0
           money = @input.validateWithdrawMoney(@accountId, money)
           if money != 0
-            @pocketsDatabase.addMoneyToPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1].to_i, money)
+            @pocketsDatabase.addMoneyToPocket(@accountId, @pockets[pocketNumber - 1][0], @pockets[pocketNumber - 1][1].to_i, money)
           end
         end
       end
@@ -55,13 +56,13 @@ class PocketsMenu
       if pocketNumber != 0
         money = @input.getMoney
         if money != 0
-          while @pockets[pocketNumber-1][1].to_i < money
-            print @pockets[pocketNumber-1][1].to_i
+          while @pockets[pocketNumber - 1][1].to_i < money
+            print @pockets[pocketNumber - 1][1].to_i
             print "\nThe amount is greater than pocket amount."
             money = @input.getMoney
           end
           if money != 0
-            @pocketsDatabase.withdrawMoneyFromPocket(@accountId, @pockets[pocketNumber-1][0], @pockets[pocketNumber-1][1].to_i, money)
+            @pocketsDatabase.withdrawMoneyFromPocket(@accountId, @pockets[pocketNumber - 1][0], @pockets[pocketNumber - 1][1].to_i, money)
           end
         end
       end
@@ -69,24 +70,31 @@ class PocketsMenu
       @pocketsGraphics.showPockets(@fullname, @pockets)
       pocketNumber = @input.getPocketNumber(@pockets)
       if pocketNumber != 0
-        @where = @pockets[pocketNumber-1][0].to_s
+        @where = @pockets[pocketNumber - 1][0].to_s
         system('cls')
-        @transactionsGraphics.sendMoney(@fullname, "")
+        @transactionsGraphics.sendMoney(@fullname, '')
         email = @input.getEmailToSend
-        if email != "0"
+        if email != '0'
           system('cls')
           @transactionsGraphics.sendMoney(@fullname, email)
           money = @input.getMoney
-          while @pockets[pocketNumber-1][1] < money
-            print "The amount is greater than pocket amount."
+          while @pockets[pocketNumber - 1][1] < money
+            print 'The amount is greater than pocket amount.'
             money = @input.getMoney
           end
           if money != 0
-            @pocketsDatabase.sendMoneyFromPocket(@accountId, email, @pockets[pocketNumber-1], money, @where)
+            @pocketsDatabase.sendMoneyFromPocket(@accountId, email, @pockets[pocketNumber - 1], money, @where)
           end
         end
       end
     end
-    return 5
+    5
+  end
+
+  def search_pocket(pocket_name)
+    @pockets.each do |pocket|
+      return true if pocket[0].to_s == pocket_name.to_s
+    end
+    false
   end
 end
